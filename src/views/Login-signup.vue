@@ -246,7 +246,7 @@ const signUp = async () => {
 }
 .wrapper .form-wrapper.sign-up {
   position: absolute;
-  top: 450px;
+  top: 455px;
   left: 0;
 }
 .wrapper.active .form-wrapper.sign-up {
