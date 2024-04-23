@@ -17,7 +17,7 @@ import { computed } from "vue";
 import { useUserStore } from "@/stores/user";
 const userStore = useUserStore();
 const profileImageUrl = computed(() => {
-  return `http://localhost:8000/Images/${userStore.user.image}`;
+  return `https://realtime-chat-app-api-1xcb.onrender.com/Images/${userStore.user.image}`;
 });
 </script>
 <style>

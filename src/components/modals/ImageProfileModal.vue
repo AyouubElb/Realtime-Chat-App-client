@@ -142,7 +142,7 @@ onMounted(() => {
     avatarList.splice(0, avatarList.length, ...res);
 
     const data = res.map((image) => {
-      image.name = `http://localhost:8000/Images/${image.name}`;
+      image.name = `https://realtime-chat-app-api-1xcb.onrender.com/Images/${image.name}`;
       return image;
     });
     avatarUrlList.splice(0, avatarUrlList.length, ...data);

@@ -112,7 +112,7 @@ onMounted(() => {
 
       return userStore.fetchUserById(friendId).then((res) => {
         chat.friendInfo = res;
-        chat.friendInfo.image = `http://localhost:8000/Images/${chat.friendInfo.image}`;
+        chat.friendInfo.image = `https://realtime-chat-app-api-1xcb.onrender.com/Images/${chat.friendInfo.image}`;
         chat.user = userStore.user;
       });
     });
@@ -130,7 +130,7 @@ onMounted(() => {
 const getUsers = () => {
   userStore.fetchAllUsers().then((res) => {
     const data = res.map((user) => {
-      user.image = `http://localhost:8000/Images/${user.image}`;
+      user.image = `https://realtime-chat-app-api-1xcb.onrender.com/Images/${user.image}`;
       return user;
     });
     userList.splice(0, userList.length, ...data);

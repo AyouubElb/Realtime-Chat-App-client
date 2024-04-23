@@ -7,7 +7,7 @@ import toastr from "toastr";
 export const useUserStore = defineStore("UserStore", {
   state: () => {
     return {
-      API_URL: "http://localhost:8000/api",
+      API_URL: "https://realtime-chat-app-api-1xcb.onrender.com/api",
       jwt: localStorage.getItem("jwt_info")
         ? JSON.parse(localStorage.getItem("jwt_info"))
         : null,
@@ -26,7 +26,7 @@ export const useUserStore = defineStore("UserStore", {
     },
     profileImage() {
       if (this.user) {
-        return `http://localhost:8000/Images/${this.user.image}`;
+        return `https://realtime-chat-app-api-1xcb.onrender.com/Images/${this.user.image}`;
       }
     },
     friendId() {
