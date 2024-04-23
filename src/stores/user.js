@@ -34,7 +34,7 @@ export const useUserStore = defineStore("UserStore", {
       return id;
     },
     socket() {
-      return io("http://localhost:3000");
+      return io("https://realtime-chat-app-socket.onrender.com");
     },
   },
   actions: {
