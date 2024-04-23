@@ -83,7 +83,6 @@
 </template>
 <script setup>
 import UserChat from "./UserChat.vue";
-import { API_URL } from "../../config";
 import { ref, reactive, onMounted, computed, toRaw } from "vue";
 import { useUserStore } from "@/stores/user.js";
 import { io } from "socket.io-client";

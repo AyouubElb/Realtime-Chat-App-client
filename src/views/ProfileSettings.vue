@@ -83,7 +83,6 @@ import UserInfoModal from "@/components/modals/UserInfoModal";
 import ChangePasswordModal from "@/components/modals/ChangePasswordModal";
 import ImageProfileModal from "@/components/modals/ImageProfileModal";
 import { ref, reactive, watchEffect, onMounted, computed } from "vue";
-import { API_URL } from "@/config";
 import toastr from "toastr";
 import axios from "axios";
 import { useUserStore } from "@/stores/user";

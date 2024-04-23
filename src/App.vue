@@ -5,7 +5,6 @@
   </main>
 </template>
 <script setup>
-import Navbar from "./components/Navbar.vue";
 import Sidebar from "./components/Sidebar.vue";
 import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";

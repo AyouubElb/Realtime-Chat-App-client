@@ -43,7 +43,6 @@
   </div>
 </template>
 <script setup>
-import { API_URL } from "../../config";
 import {
   onMounted,
   onBeforeUnmount,
