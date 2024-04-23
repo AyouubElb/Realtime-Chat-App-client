@@ -5,20 +5,7 @@
   </main>
 </template>
 <script setup>
-import Sidebar from "./components/Sidebar.vue";
-import { ref, onMounted } from "vue";
-import { useRoute } from "vue-router";
-
-const isChatPage = ref(false);
-
-onMounted(() => {
-  const route = useRoute();
-  if (route.path === "/") {
-    isChatPage.value = true;
-  }
-});
 </script>
-
 <style>
 *,
 *::before,
