@@ -1,4 +1,5 @@
-<template lang="">
+<template>
+    <Sidebar />
   <div class="chat-section">
     <div
       class="message-box pt-4"
@@ -15,8 +16,9 @@
   </div>
 </template>
 <script setup>
-import ChatHub from "../components/chat/ChatHub";
-import chatBox from "../components/chat/chatBox";
+import Sidebar from "@/components/Sidebar";
+import ChatHub from "@/components/chat/ChatHub";
+import chatBox from "@/components/chat/chatBox";
 import { onMounted, watchEffect, reactive, ref } from "vue";
 import { useUserStore } from "../stores/user";
 import { io } from "socket.io-client";
