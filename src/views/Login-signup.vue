@@ -148,8 +148,8 @@ const logIn = async () => {
       email: email.value,
       password: password.value,
     });
-    await localStorage.setItem("jwt_info", JSON.stringify(res.data));
      router.push("/");
+    await localStorage.setItem("jwt_info", JSON.stringify(res.data));
     toastr.success("User is authenticated SuccessFully", "New Account", {
       positionClass: "toast-top-right",
     });
