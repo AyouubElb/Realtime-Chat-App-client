@@ -122,33 +122,33 @@ const passwordRegEx =
 
 const logIn = async () => {
   try {
-    if (!email.value || !password.value) {
-      toastr.error("All fields is required!", {
-        positionClass: "toast-top-right",
-      });
-      return;
-    }
-    if (!emailRegEx.test(email.value)) {
-      toastr.error("Please enter a valid email address!", {
-        positionClass: "toast-top-right",
-      });
-      return;
-    }
-    if (!passwordRegEx.test(password.value)) {
-      toastr.error(
-        "At least 1 Uppercase , 1 Lowercase, 1 Number, 1 Symbol,Min 8 chars ",
-        "Please enter a valid password!",
-        {
-          positionClass: "toast-top-right",
-        }
-      );
-      return;
-    }
+    // if (!email.value || !password.value) {
+    //   toastr.error("All fields is required!", {
+    //     positionClass: "toast-top-right",
+    //   });
+    //   return;
+    // }
+    // if (!emailRegEx.test(email.value)) {
+    //   toastr.error("Please enter a valid email address!", {
+    //     positionClass: "toast-top-right",
+    //   });
+    //   return;
+    // }
+    // if (!passwordRegEx.test(password.value)) {
+    //   toastr.error(
+    //     "At least 1 Uppercase , 1 Lowercase, 1 Number, 1 Symbol,Min 8 chars ",
+    //     "Please enter a valid password!",
+    //     {
+    //       positionClass: "toast-top-right",
+    //     }
+    //   );
+    //   return;
+    // }
     const res = await axios.post(`${userStore.API_URL}/users/login`, {
       email: email.value,
       password: password.value,
     });
-     router.push("/");
+    router.push("/");
     await localStorage.setItem("jwt_info", JSON.stringify(res.data));
     toastr.success("User is authenticated SuccessFully", "New Account", {
       positionClass: "toast-top-right",

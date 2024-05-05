@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 
-const jwt = localStorage.getItem("jwt_info");
+// const jwt = localStorage.getItem("jwt_info");
 
 const routes = [
   {
@@ -30,8 +30,15 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
+  const jwt = JSON.parse(localStorage.getItem("jwt_info"));
+  console.log("jwt: ", jwt);
+
   if (!jwt && to.name !== "LoginSignup") {
+    console.log("test");
     next({ name: "LoginSignup" });
+  } else if (jwt && to.name === "LoginSignup") {
+    console.log("test2");
+    next("/");
   } else {
     next();
   }
