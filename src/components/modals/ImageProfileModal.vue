@@ -97,13 +97,13 @@
         <div class="modal-body" style="padding: 1rem">
           <div class="grid-container">
             <div
-              v-for="(image, index) in avatarUrlList"
+              v-for="(image, index) in avatarList"
               :key="index"
               class="avatar-image"
               :class="{ 'avatar-image-active': selectedAvatar == index }"
               @click="selectedAvatar = index"
             >
-              <img :src="image.name" :alt="image.name" />
+              <AdvancedImage :cldImg="image.file" loading="lazy" />
             </div>
           </div>
         </div>
@@ -128,26 +128,38 @@ import axios from "axios";
 import toastr from "toastr";
 import { Buffer } from "buffer";
 import { reactive, ref, onMounted } from "vue";
+import { AdvancedImage } from "@cloudinary/vue";
+import { Cloudinary } from "@cloudinary/url-gen";
 import { useUserStore } from "@/stores/user";
 const userStore = useUserStore();
 const avatarList = reactive([]);
-const avatarUrlList = reactive([]);
 const fileInput = ref(null);
-const base64Image = ref(null);
-const imageUrlList = reactive([]);
 const selectedAvatar = ref(null);
 
 onMounted(() => {
+  // Create a Cloudinary instance and set your cloud name.
+  const cld = new Cloudinary({
+    cloud: {
+      cloudName: "dxupeynms",
+    },
+  });
   userStore.fetchAvatarImages().then((res) => {
-    avatarList.splice(0, avatarList.length, ...res);
+    // avatarList.splice(0, avatarList.length, ...res);
 
     const data = res.map((image) => {
-      image.name = `https://realtime-chat-app-api-1xcb.onrender.com/Images/${image.name}`;
+      image.file = cld
+        .image(image.cloudinary_id)
+        .format("auto")
+        .quality("auto");
       return image;
     });
-    avatarUrlList.splice(0, avatarUrlList.length, ...data);
+    avatarList.splice(0, avatarList.length, ...data);
   });
 });
+
+const triggerFileInputClick = () => {
+  fileInput.value.click();
+};
 
 const handleFileUpload = () => {
   const file = fileInput.value.files[0];
@@ -165,41 +177,13 @@ const handleFileUpload = () => {
 const saveImage = async () => {
   let user = userStore.user;
 
-  let url = avatarList[selectedAvatar.value].name;
-  let imageName = url.substring(url.lastIndexOf("/") + 1);
-
-  user.image = imageName;
+  user.image = avatarList[selectedAvatar.value]._id;
   userStore.updateUser(user).then(() => {
-    let jwt = JSON.parse(localStorage.getItem("jwt_info"));
-    jwt.user = user;
-
-    localStorage.setItem("jwt_info", JSON.stringify(jwt));
+    toastr.success("User profile image updated successfully!", {
+      positionClass: "toast-bottom-left",
+    });
   });
 };
-
-const triggerFileInputClick = () => {
-  fileInput.value.click();
-};
-
-const fetchAvatarList = async () => {
-  try {
-    for (var i = 0; i < userStore.avatarList.length; i++) {
-      const base64String = Buffer.from(
-        userStore.avatarList[i].data.data,
-        "binary"
-      ).toString("base64");
-
-      const imageUrl = `data:image/jpg;base64,${base64String}`;
-      imageUrlList.push(imageUrl);
-    }
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-onMounted(() => {
-  fetchAvatarList();
-});
 </script>
 <style>
 .image-management-container {

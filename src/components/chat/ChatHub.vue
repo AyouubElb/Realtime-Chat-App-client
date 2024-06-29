@@ -32,7 +32,11 @@
                   v-if="user._id !== userStore.user._id"
                   @click="selectedUserIndex = index"
                 >
-                  <img :src="user.image" :alt="user.username" />
+                  <AdvancedImage
+                    :cldImg="userStore.profileImage"
+                    :alt="userStore.user.username"
+                    loading="lazy"
+                  />
                   <div class="user-name my-auto">
                     {{ user.username }}
                   </div>
@@ -73,7 +77,11 @@
   </div>
   <div class="user-panel">
     <div class="icon me-2">
-      <img :src="userStore.profileImage" :alt="userStore.profileImage" />
+      <AdvancedImage
+        :cldImg="userStore.profileImage"
+        :alt="userStore.user.username"
+        loading="lazy"
+      />
     </div>
     <div class="user_name">{{ userStore.user.username }}</div>
     <router-link to="/profile-settings" class="setting-btn">
@@ -84,6 +92,7 @@
 <script setup>
 import UserChat from "./UserChat.vue";
 import { ref, reactive, onMounted, computed, toRaw } from "vue";
+import { AdvancedImage } from "@cloudinary/vue";
 import { useUserStore } from "@/stores/user.js";
 import { io } from "socket.io-client";
 const userStore = useUserStore();
@@ -128,11 +137,7 @@ onMounted(() => {
 // Fetch all users
 const getUsers = () => {
   userStore.fetchAllUsers().then((res) => {
-    const data = res.map((user) => {
-      user.image = `https://realtime-chat-app-api-1xcb.onrender.com/Images/${user.image}`;
-      return user;
-    });
-    userList.splice(0, userList.length, ...data);
+    userList.splice(0, userList.length, ...res);
   });
 };
 

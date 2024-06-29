@@ -15,13 +15,18 @@
           @mouseover="showPencil()"
           @mouseleave="hidePencil()"
         >
-          <img :src="userStore.profileImage" />
+          <AdvancedImage
+            :cldImg="userStore.profileImage"
+            :alt="userStore.user.username"
+            loading="lazy"
+          />
+          <!-- <img :src="userStore.profileImage" /> -->
           <div class="icon-content" v-if="editIcon">
             <i class="bi bi-pencil-fill"></i>
           </div>
         </div>
         <ImageProfileModal />
-        <p>{{ username }}</p>
+        <p>{{ userStore.user.username }}</p>
         <button
           class="log-out-btn"
           @click="handleLogout"
@@ -83,6 +88,8 @@ import UserInfoModal from "@/components/modals/UserInfoModal";
 import ChangePasswordModal from "@/components/modals/ChangePasswordModal";
 import ImageProfileModal from "@/components/modals/ImageProfileModal";
 import { ref, reactive, watchEffect, onMounted, computed } from "vue";
+import { AdvancedImage } from "@cloudinary/vue";
+
 import toastr from "toastr";
 import axios from "axios";
 import { useUserStore } from "@/stores/user";
@@ -107,6 +114,7 @@ const accountInfo = reactive([
 const windowWidth = ref();
 
 onMounted(() => {
+  console.log("userStore.user.username", userStore.user.username);
   windowWidth.value = window.innerWidth;
   window.addEventListener("resize", handleWindowSizeChange);
 });

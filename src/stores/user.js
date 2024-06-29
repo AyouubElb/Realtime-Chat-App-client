@@ -3,6 +3,7 @@ import axios from "axios";
 import { io } from "socket.io-client";
 import { Buffer } from "buffer";
 import toastr from "toastr";
+import { Cloudinary } from "@cloudinary/url-gen";
 
 export const useUserStore = defineStore("UserStore", {
   state: () => {
@@ -15,6 +16,11 @@ export const useUserStore = defineStore("UserStore", {
       chatList: [],
       openedChatIndex: -1,
       notifications: [],
+      cld: new Cloudinary({
+        cloud: {
+          cloudName: "dxupeynms",
+        },
+      }),
     };
   },
   getters: {
@@ -25,9 +31,12 @@ export const useUserStore = defineStore("UserStore", {
       return this.jwt ? this.jwt.user : null;
     },
     profileImage() {
-      if (this.user) {
-        return `https://realtime-chat-app-api-1xcb.onrender.com/Images/${this.user.image}`;
-      }
+      if (this.user && this.user.image) {
+        return this.cld
+          .image(this.user.image.cloudinary_id)
+          .format("auto")
+          .quality("auto");
+      } else return {};
     },
     friendId() {
       const id = this.clickedChat.members.find((id) => id !== this.user._id);
@@ -66,9 +75,9 @@ export const useUserStore = defineStore("UserStore", {
           `${this.API_URL}/users/update/${this.user._id}`,
           user
         );
-        this.jwt.user = user;
+
+        this.jwt.user = res.data.user;
         localStorage.setItem("jwt_info", JSON.stringify(this.jwt));
-        console.log("updated user: ", user);
       } catch (error) {
         console.log(error);
         toastr.error(error, "Server Error!", {
@@ -152,7 +161,6 @@ export const useUserStore = defineStore("UserStore", {
     async fetchAvatarImages() {
       try {
         const res = await axios.get(`${this.API_URL}/images`);
-        console.log("fetchAvatarImages", res);
         return res.data;
       } catch (error) {
         console.log(error);

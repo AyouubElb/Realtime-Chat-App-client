@@ -1,25 +1,22 @@
 <template>
   <div class="sidebar">
     <div class="sidebar-icon">
-      <img :src="userStore.profileImage" alt="" />
+      <AdvancedImage
+        :cldImg="userStore.profileImage"
+        :alt="userStore.user.username"
+        loading="lazy"
+      />
     </div>
   </div>
 </template>
-<script>
-export default {
-  beforeRouteEnter(to, from, next) {
-    console.log("before router enter");
-  },
-};
-</script>
+
 <script setup>
 import { computed } from "vue";
+import { AdvancedImage } from "@cloudinary/vue";
 import { useUserStore } from "@/stores/user";
 const userStore = useUserStore();
-const profileImageUrl = computed(() => {
-  return `https://realtime-chat-app-api-1xcb.onrender.com/Images/${userStore.user.image}`;
-});
 </script>
+
 <style>
 .sidebar {
   height: 100vh;
