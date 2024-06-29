@@ -4,7 +4,12 @@
       <i class="bi bi-arrow-left-short"></i>
     </div>
     <div class="chat-header-icon me-3">
-      <img :src="chatInfo.friendInfo.image" alt="" />
+      <!-- <img :src="chatInfo.friendInfo.image" alt="" /> -->
+      <AdvancedImage
+        :cldImg="chatInfo.friendInfo.image"
+        :alt="chatInfo.friendInfo.username"
+        loading="lazy"
+      />
     </div>
     <strong>{{ chatInfo.friendInfo.username }}</strong>
   </div>
@@ -51,6 +56,7 @@ import {
   reactive,
   watchEffect,
 } from "vue";
+import { AdvancedImage } from "@cloudinary/vue";
 import { useUserStore } from "../../stores/user.js";
 import { io } from "socket.io-client";
 import moment from "moment/moment";

@@ -8,7 +8,7 @@ import { Cloudinary } from "@cloudinary/url-gen";
 export const useUserStore = defineStore("UserStore", {
   state: () => {
     return {
-      API_URL: "https://realtime-chat-app-api-1xcb.onrender.com/api",
+      API_URL: "http://localhost:8000/api",
       jwt: localStorage.getItem("jwt_info")
         ? JSON.parse(localStorage.getItem("jwt_info"))
         : null,

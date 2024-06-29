@@ -1,7 +1,12 @@
 <template>
   <div class="friend-card d-flex gap-1" v-if="friendInfo">
     <div class="icon my-auto me-2">
-      <img :src="friendInfo.image" alt="" />
+      <!-- <img :src="friendInfo.image" alt="" /> -->
+      <AdvancedImage
+        :cldImg="friendInfo.image"
+        :alt="friendInfo.username"
+        loading="lazy"
+      />
     </div>
     <div class="text-content my-auto">
       <div class="name">
@@ -39,6 +44,7 @@ import {
   onMounted,
   computed,
 } from "vue";
+import { AdvancedImage } from "@cloudinary/vue";
 import { useUserStore } from "../../stores/user.js";
 import { io } from "socket.io-client";
 import moment from "moment/moment";
@@ -56,6 +62,7 @@ const latestUnreadNotif = reactive({});
 const { chat } = toRefs(props);
 
 const friendInfo = computed(() => {
+  console.log("chat.value.friendInfo", chat.value.friendInfo.image);
   return chat.value.friendInfo ? chat.value.friendInfo : null;
 });
 

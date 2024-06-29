@@ -93,6 +93,7 @@
 import UserChat from "./UserChat.vue";
 import { ref, reactive, onMounted, computed, toRaw } from "vue";
 import { AdvancedImage } from "@cloudinary/vue";
+import { Cloudinary } from "@cloudinary/url-gen";
 import { useUserStore } from "@/stores/user.js";
 import { io } from "socket.io-client";
 const userStore = useUserStore();
@@ -109,6 +110,13 @@ const openChat = (index) => {
 };
 
 onMounted(() => {
+  // Create a Cloudinary instance and set your cloud name.
+  const cld = new Cloudinary({
+    cloud: {
+      cloudName: "dxupeynms",
+    },
+  });
+
   // fetch user chats
   userStore.fetchAllChats().then((chats) => {
     // Fetch Friend info for each chat
@@ -120,7 +128,12 @@ onMounted(() => {
 
       return userStore.fetchUserById(friendId).then((res) => {
         chat.friendInfo = res;
-        chat.friendInfo.image = `https://realtime-chat-app-api-1xcb.onrender.com/Images/${chat.friendInfo.image}`;
+        console.log("friendId", chat.friendInfo);
+        // chat.friendInfo.image = `https://realtime-chat-app-api-1xcb.onrender.com/Images/${chat.friendInfo.image}`;
+        chat.friendInfo.image = cld
+          .image(chat.friendInfo.image.cloudinary_id)
+          .format("auto")
+          .quality("auto");
         chat.user = userStore.user;
       });
     });
