@@ -37,7 +37,7 @@ const handleWindowSizeChange = () => {
 };
 
 onMounted(() => {
-  if (socket != null) {
+  if (socket != null && userStore.user) {
     socket.emit("addNewUser", userStore.user._id);
   }
 });
